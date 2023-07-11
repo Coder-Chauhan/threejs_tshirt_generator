@@ -47,32 +47,36 @@ const Customizer = () => {
         }
     }
 
-    const handleSubmit = async (type) => {
-        if (!prompt) return alert("Please enter a prompt");
+    // const handleSubmit = async (type) => {
+    //     if (!prompt) return alert("Please enter a prompt");
 
-        try {
-            setGeneratingImg(true);
+    //     try {
+    //         setGeneratingImg(true);
 
-            const response = await fetch('http://localhost:5000/api/v1/images/generations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt,
-                },
-                )
-            })
+    //         const response = await fetch('http://localhost:5000/api/v1/images/generations', {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //             },
+    //             body: JSON.stringify({
+    //                 prompt,
+    //             },
+    //             )
+    //         })
 
-            const data = await response.json();
+    //         const data = await response.json();
 
-            handleDecals(type, `data:image/png;base64,${data.photo}`)
-        } catch (error) {
-            alert(error)
-        } finally {
-            setGeneratingImg(false);
-            setActiveEditorTab("");
-        }
+    //         handleDecals(type, `data:image/png;base64,${data.photo}`)
+    //     } catch (error) {
+    //         alert(error)
+    //     } finally {
+    //         setGeneratingImg(false);
+    //         setActiveEditorTab("");
+    //     }
+    // }
+
+    const handleSubmit = () => {
+        alert("The OpenAI API is not free to use anymore. Therefore had to take this feature down.")
     }
 
     const handleDecals = (type, result) => {
