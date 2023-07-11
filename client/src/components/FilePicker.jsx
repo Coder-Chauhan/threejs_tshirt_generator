@@ -28,12 +28,6 @@ const FilePicker = ({ file, setFile, readFile }) => {
                 handleClick={() => readFile('logo')}
                 customStyles="text-xs"
             />
-            <CustomButton 
-                type="filled"
-                title="Full"
-                handleClick={() => readFile('full')}
-                customStyles="text-xs"
-            />
         </div>
     </div>
   )
