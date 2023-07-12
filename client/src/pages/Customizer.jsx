@@ -77,34 +77,32 @@ const Customizer = () => {
     // }
 
     const handleSubmit = async (type) => {
-        if (!prompt) return alert("Please enter a prompt");
-
-        try {
-            setGeneratingImg(true);
-
-            const response = await fetch('http://localhost:5000/api/v1/images/generations', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    prompt,
-                },
-                )
-            })
-
-            const data = await response.json();
-
-            handleDecals(type, `data:image/png;base64,${data.photo}`)
-        } catch (error) {
-            alert(error)
-        } finally {
-            setGeneratingImg(false);
-            setActiveEditorTab("");
+        setGeneratingImg(true);
+    
+        const response = await fetch(
+          'https://api-inference.huggingface.co/models/runwayml/stable-diffusion-v1-5',
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${API_KEY}`,
+            },
+            body: JSON.stringify({ inputs: prompt }),
+          }
+        );
+    
+        if (!response.ok) {
+          throw new Error('Failed to generate image');
         }
-    }
-
-    const handleDecals = (type, result) => {
+    
+        const blob = await response.blob();
+        const base64String = await convertBlobToBase64(blob);
+    
+        handleDecals(type, base64String);
+        setGeneratingImg(false);
+      };
+    
+      const handleDecals = (type, result) => {
         const decalType = DecalTypes[type];
         state[decalType.stateProperty] = result;
       };
